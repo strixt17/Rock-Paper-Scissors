@@ -1,5 +1,14 @@
 int gamestate = 0;
 
+int delay1 = 0;
+int delay2 = 0;
+int playerstate = 1;
+
+int player1 = 0;
+int player2 = 4;
+
+String[] counter = new String[4];
+
 PImage logo;
 PImage paper;
 PImage scissors;
@@ -23,6 +32,11 @@ void setup(){
     paper = loadImage("paper.png");
     scissors = loadImage("scissors.png");
     rock = loadImage("stone.png");
+
+    counter[0] = "Rock";
+    counter[1] = "Paper";
+    counter[2] = "Scissors";
+    counter[3] = "SHOOT!";
 }
 
 void draw(){
@@ -42,6 +56,26 @@ void draw(){
         text("AI", 200, 490);
         text(" 2", 400, 490);
     }
+    if(gamestate == 1){
+        textSize(50);
+        fill(255);
+        text("Choose Item", 225, 350);
+
+        image(paper, 275, 375, 150, 150);
+        image(rock, 62, 375, 150, 150);
+        image(scissors, 487, 375, 150, 150);
+
+        if(player1 == player2){
+            gamestate = 3;
+        }
+    }
+    if(gamestate == 3){
+        textSize(50);
+        text("Tie Game", 250, 220);
+
+        rect(275, 250, 150, 100);
+        
+    }
 }
 
 void mousePressed(){
@@ -52,6 +86,22 @@ void mousePressed(){
             }
             if(mouseX >= 375 && mouseX <= 525){
                 gamestate = 2;
+            }
+        }
+    }
+    if(gamestate == 1){
+        if(mouseY >= 375 && mouseY <= 525){
+            if(mouseX >= 62 && mouseX <= 212){
+                player1 = 1;
+                ai();
+            }
+            if(mouseX >= 275 && mouseX <= 425){
+                player1 = 2;
+                ai();
+            }
+            if(mouseX >= 487 && mouseX <= 637){
+                player1 = 3;
+                ai();
             }
         }
     }
@@ -81,4 +131,27 @@ void background(){
         backdrop3x = floor(random(0, 700));
         backdrop3y = 0;
     }
+}
+
+/*void ai(){
+    player2 = floor(random(1,4));
+    fill(255);
+    if(delay1 == 0){
+        textSize(50);
+        text(counter[delay2], 100, 100);
+        delay2 = delay2 + 1;
+        delay1 = 1;
+        if(delay2 == 4){
+            delay2 = 0;
+        }
+    }
+    if(delay1 == 1){
+        delay(500);
+        delay1 = 0;
+    }
+}*/
+
+void ai(){
+    player2 = floor(random(1, 4));
+    delay(500);
 }
